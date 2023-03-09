@@ -24,7 +24,7 @@ class zekrPageScreen extends StatelessWidget {
           child: Scaffold(
             appBar: buildWzkorAppBarBack(context,cubit),
             body: BuildCondition(
-              condition: state is! CollectZekrLoadingStates || cubit.azkarList.isNotEmpty,
+              condition: cubit.azkarList.isNotEmpty,
               builder: (context) => Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: SingleChildScrollView(

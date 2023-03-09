@@ -72,7 +72,7 @@ class WzkorCubit extends Cubit<WzkorStates> {
     },
     {
       "title":"اذكار عامة",
-      "subtitle":"الاذكار بعد الصلاة المفروضة",
+      "subtitle":"اذكار المسلم في يومة",
       "image":"assets/image/quran_sepha.jpg",
       "file_path" : generalZekr
     },
@@ -84,14 +84,14 @@ class WzkorCubit extends Cubit<WzkorStates> {
   List<AsmaaAllahModel> asmaaAllah = [];
   List<AzkarModel> azkarList = [];
 
-  readFile(String jsonfile) async {
+  Future<void> readFile(String jsonfile) async {
     var text = await rootBundle.loadString(jsonfile);
     fileText = text;
   }
 
   Map<String, int> azkars = {};
   // Get Azkar Json File Data
-  parseJson() {
+  void parseJson() {
     final parsed = json.decode(fileText).cast<Map<String, dynamic>>();
     azkarList = parsed.map<AzkarModel>((json) => AzkarModel.fromJson(json)).toList();
     for (var element in azkarList) {
@@ -101,40 +101,40 @@ class WzkorCubit extends Cubit<WzkorStates> {
     }
   }
 
-  getData(String jsonfile) async {
+  Future<void> getData(String jsonfile) async {
     emit(CollectZekrLoadingStates());
     azkarList = [];
     await readFile(jsonfile);
-    await parseJson();
+    parseJson();
     emit(CollectZekrSuccessStates());
   }
 
   // Get Quran Json File Data
-  parseQuranJson() {
+  void parseQuranJson() {
     final parsed = json.decode(fileText).cast<Map<String, dynamic>>();
     souras = parsed.map<Soura>((json) => Soura.fromJson(json)).toList();
   }
 
-  parseAsmaaAllahJson() {
+  void parseAsmaaAllahJson() {
     final parsed = json.decode(fileText).cast<Map<String, dynamic>>();
     asmaaAllah = parsed.map<AsmaaAllahModel>((json) => AsmaaAllahModel.fromJson(json)).toList();
   }
 
-  getQuran() async {
+  Future<void> getQuran() async {
     emit(CollectQuranLoadingStates());
     if (souras.isEmpty){
       await readFile("assets/Quran.json");
-      await parseQuranJson();
+      parseQuranJson();
       emit(CollectQuranSuccessStates());
     } else {
       emit(CollectQuranSuccessStates());
     }
   }
-  void getAsmaaAllah() async {
+  Future<void> getAsmaaAllah() async {
     emit(CollectAsmaaAllahLoadingStates());
     if (souras.isEmpty){
       await readFile("assets/Names_Of_Allah.json");
-      await parseAsmaaAllahJson();
+      parseAsmaaAllahJson();
       print(asmaaAllah.first.text);
       emit(CollectAsmaaAllahSuccessStates());
     } else {

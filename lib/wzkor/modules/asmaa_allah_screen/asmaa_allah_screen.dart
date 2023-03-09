@@ -21,7 +21,7 @@ class asmaaAllahScreen extends StatelessWidget {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            appBar: buildWzkorAppBarBack(context,cubit),
+            appBar: buildWzkorAppBarBack(context, cubit),
             body: SingleChildScrollView(
                 child: Container(
               width: double.infinity,
@@ -29,19 +29,22 @@ class asmaaAllahScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('أسماء الله الحسني',
-                      style: Theme.of(context).textTheme.titleMedium,
+                  Text(
+                    'أسماء الله الحسني',
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(
                     'إن لله تسع وتسعون اسماً من احصاها دخل الحنة',
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   ListView.separated(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) => buildWzkorAsmaaAllahItem(
-                          context, cubit, cubit.asmaaAllah[index]),
+                          context, cubit, cubit.asmaaAllah[index],index),
                       separatorBuilder: (context, index) => SizedBox(
                             height: 20,
                           ),
@@ -55,65 +58,80 @@ class asmaaAllahScreen extends StatelessWidget {
     );
   }
 
-  Widget buildWzkorAsmaaAllahItem(context, WzkorCubit cubit, AsmaaAllahModel model) =>
-      Container(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-        decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.black45, width: 1)),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              model.name!,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Text(
-              model.text!,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget buildWzkorAsmaaAllahItem(
+          context, WzkorCubit cubit, AsmaaAllahModel model, int index) =>
+      Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.black45, width: 1)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                IconButton(
-                    onPressed: () {
-                      Share.share(
-                          "${model.name}\n${model.text}\n  \n نزل تطبيق وذكر الان وابدأ الذكر !.. شكرا");
-                    },
-                    icon: const Icon(
-                      Icons.share,
-                      size: 30,
-                    ),
-                  color: Theme.of(context).canvasColor,
+                Text(
+                  model.name!,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                Spacer(),
-                IconButton(
-                    onPressed: () async {
-                      await Clipboard.setData(
-                          ClipboardData(text: "${model.name}\n${model.text}"));
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          backgroundColor: HexColor("00ADB5"),
-                          content: const Text(
-                            'تم النسخ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          )));
-                    },
-                    icon: const Icon(
-                      Icons.copy,
-                      size: 30,
+                Text(
+                  model.text!,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Share.share(
+                            "${model.name}\n${model.text}\n  \n نزل تطبيق وذكر الان وابدأ الذكر !.. شكرا");
+                      },
+                      icon: const Icon(
+                        Icons.share,
+                        size: 30,
+                      ),
+                      color: Theme.of(context).canvasColor,
                     ),
-                  color: Theme.of(context).canvasColor,
+                    Spacer(),
+                    IconButton(
+                      onPressed: () async {
+                        await Clipboard.setData(ClipboardData(
+                            text: "${model.name}\n${model.text}"));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: HexColor("00ADB5"),
+                            content: const Text(
+                              'تم النسخ',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            )));
+                      },
+                      icon: const Icon(
+                        Icons.copy,
+                        size: 30,
+                      ),
+                      color: Theme.of(context).canvasColor,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+          Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.lime[900],
+              borderRadius: BorderRadius.only(topRight: Radius.circular(20),)
+            ),
+              child: Text(
+                '${index + 1}',
+            style: Theme.of(context).textTheme.titleMedium,
+          ))
+        ],
       );
 }

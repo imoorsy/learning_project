@@ -7,7 +7,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'https://student.valuxapps.com/api/',
+        baseUrl: 'https://v3.football.api-sports.io/',
         receiveDataWhenStatusError: true,
       ),
     );
@@ -64,5 +64,15 @@ class DioHelper {
         data: data,
         queryParameters: query
     );
+  }
+
+  static Future<Response> getMatchData ({
+    required String url,
+    required Map<String,dynamic> query,
+  }) async {
+    dio.options.headers = {
+      'x-apisports-key' : '7960e9f4b98ef571e7f0337519e747ff',
+    };
+    return await dio.get(url, queryParameters: query);
   }
 }

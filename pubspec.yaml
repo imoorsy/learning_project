@@ -42,7 +42,7 @@ dependencies:
   audioplayers_web: ^2.0.1
   path_provider:
   flutter_svg:
-  audioplayers: ^1.1.1
+#  audioplayers: ^1.1.1
   share_plus: ^6.3.0
   shared_preferences: ^2.0.15
 

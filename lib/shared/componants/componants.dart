@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:todoapp/layout/sport_layout/cubit/cubit.dart';
+import 'package:todoapp/models/home_match_model.dart';
 import 'package:todoapp/modules/news_app/news_page/news_screen.dart';
+import 'package:todoapp/modules/sport_app/match_page/match_page.dart';
 import 'package:todoapp/modules/zekr_app//zekr_screen/cubit/cubit.dart';
 import 'package:todoapp/shared/cubit/cubit.dart';
 import 'package:todoapp/shared/cubit/states.dart';
@@ -836,3 +839,27 @@ Color chooseSnackColor(SnackState state) {
   return color;
 }
 
+String editMatchTime(int hour, int minute) {
+  hour = hour + 2 ;
+  int? hur;
+  String? min;
+  String? tim;
+
+  if(hour > 0 && hour < 12) {
+    hur = hour;
+    tim = 'am';
+  }else if(hour == 0) {
+    hur = 12;
+    tim = 'pm';
+  } else {
+    hur = hour - 12;
+    tim = 'pm';
+  }
+  if(minute.bitLength <= 1) {
+    min = '0$minute';
+  }else {
+    min = minute.toString();
+  }
+
+  return '$hur:$min $tim';
+}
