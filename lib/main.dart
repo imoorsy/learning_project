@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => SportCubit()..getMatchCenter(),
+      create: (BuildContext context) => SportCubit()..getMatchCenter(date: editDateFormat(todayDate)),
       child: BlocConsumer<SportCubit,SportStates>(
         listener: (context,state) {},
         builder: (context,state) {

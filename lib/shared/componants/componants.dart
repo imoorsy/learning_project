@@ -2,15 +2,10 @@ import 'package:buildcondition/buildcondition.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:todoapp/layout/sport_layout/cubit/cubit.dart';
-import 'package:todoapp/models/home_match_model.dart';
 import 'package:todoapp/modules/news_app/news_page/news_screen.dart';
-import 'package:todoapp/modules/sport_app/match_page/match_page.dart';
 import 'package:todoapp/modules/zekr_app//zekr_screen/cubit/cubit.dart';
 import 'package:todoapp/shared/cubit/cubit.dart';
-import 'package:todoapp/shared/cubit/states.dart';
 
 Widget defaultTextFormField(
   context, {
@@ -126,7 +121,6 @@ Widget defaultSearchFormField(
 
 Widget buildNewTaskItem(Map model, BuildContext context) {
   AppCubit cubit = AppCubit.get(context);
-  var time = DateTime.now();
   return Dismissible(
     key: Key(model['id'].toString()),
     child: Padding(
@@ -209,7 +203,6 @@ Widget buildNewTaskItem(Map model, BuildContext context) {
 
 Widget buildDoneTaskItem(Map model, BuildContext context) {
   AppCubit cubit = AppCubit.get(context);
-  var time = DateTime.now();
   return Dismissible(
     key: Key(model['id'].toString()),
     child: Padding(
@@ -291,7 +284,6 @@ Widget buildDoneTaskItem(Map model, BuildContext context) {
 
 Widget buildArchivedTaskItem(Map model, BuildContext context) {
   AppCubit cubit = AppCubit.get(context);
-  var time = DateTime.now();
   return Dismissible(
     key: Key(model['id'].toString()),
     child: Padding(
@@ -860,6 +852,25 @@ String editMatchTime(int hour, int minute) {
   }else {
     min = minute.toString();
   }
+  if(hur.bitLength == 1) {
+    return '0$hur:$min $tim';
+  }else {
+    return '$hur:$min $tim';
+  }
 
-  return '$hur:$min $tim';
+
+}
+
+String parseTimeInSec(int ms) {
+  String data = "";
+  Duration dur = Duration(milliseconds: ms);
+  int hor = dur.inHours;
+  int min = (dur.inMinutes) - (hor * 60);
+  if (hor > 0) data += "$hor:";
+  int sec = (dur.inSeconds) - (dur.inMinutes * 60);
+  if (min <= 9) data += "0";
+  data += "$min:";
+  if (sec <= 9) data += "0";
+  data += sec.toString();
+  return data;
 }

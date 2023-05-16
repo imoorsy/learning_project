@@ -221,10 +221,3 @@ class HomePageScreen extends StatelessWidget
     );
   }
 }
-
-  // All Function
-  Future<String> getName() async {
-    return 'ABDO MoRsY';
-  }
-
-

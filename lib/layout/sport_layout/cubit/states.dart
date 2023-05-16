@@ -9,3 +9,7 @@ class GetErrorHomeDataSportState extends SportStates {}
 class GetLoadingCrntMatchSportState extends SportStates {}
 class GetSuccessCrntMatchSportState extends SportStates {}
 class GetErrorCrntMatchSportState extends SportStates {}
+
+class GetLoadingCrntPlayerSportState extends SportStates {}
+class GetSuccessCrntPlayerSportState extends SportStates {}
+class GetErrorCrntPlayerSportState extends SportStates {}

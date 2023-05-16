@@ -183,7 +183,7 @@ class Lineups {
   Team? team;
   String? formation;
   List<StartXI>? startXI;
-  List<LineupSubPlayer>? substitutes;
+  List<SubXI>? substitutes;
   Coach? coach;
 
   Lineups.fromJson(Map<String, dynamic> json) {
@@ -196,9 +196,9 @@ class Lineups {
       });
     }
     if (json['substitutes'] != null) {
-      substitutes = <LineupSubPlayer>[];
+      substitutes = <SubXI>[];
       json['substitutes'].forEach((v) {
-        substitutes!.add(LineupSubPlayer.fromJson(v));
+        substitutes!.add(SubXI.fromJson(v));
       });
     }
     coach = json['coach'] != null ? Coach.fromJson(json['coach']) : null;
@@ -314,23 +314,23 @@ class Team {
   int? id;
   String? name;
   String? logo;
-  Colors? colors;
+  TeamColors? colors;
 
   Team.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     logo = json['logo'];
     colors =
-        json['colors'] != null ? Colors.fromJson(json['colors']) : null;
+        json['colors'] != null ? TeamColors.fromJson(json['colors']) : null;
   }
 }
 
-class Colors {
-  Coach? player;
+class TeamColors {
+  Player? player;
   Player? goalkeeper;
 
-  Colors.fromJson(Map<String, dynamic> json) {
-    player = json['player'] != null ? Coach.fromJson(json['player']) : null;
+  TeamColors.fromJson(Map<String, dynamic> json) {
+    player = json['player'] != null ? Player.fromJson(json['player']) : null;
     goalkeeper = json['goalkeeper'] != null
         ? Player.fromJson(json['goalkeeper'])
         : null;
@@ -373,19 +373,25 @@ class LineupPlayer {
   }
 }
 
+class SubXI {
+  LineupSubPlayer? player;
+
+  SubXI.fromJson(Map<String, dynamic> json) {
+    player = json['player'] != null ? LineupSubPlayer.fromJson(json['player']) : null;
+  }
+}
+
 class LineupSubPlayer {
   int? id;
   String? name;
   int? number;
   String? pos;
-  Null? grid;
 
   LineupSubPlayer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     number = json['number'];
     pos = json['pos'];
-    grid = json['grid'];
   }
 }
 
